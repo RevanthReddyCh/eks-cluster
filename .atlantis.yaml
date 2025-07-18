@@ -11,11 +11,15 @@ workflows:
         - run: terraform apply tfplan
 
 projects:
-  - dir: .
+  - name: default
+    dir: .
     workflow: destroy
     autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
       enabled: true
-    # Allow PRs from all branches
+      when_modified: ["*.tf", "*.tfvars"]
+    # Optional: use this if you want Atlantis to trigger on specific workspaces
+    # workspace: default
+
+    # These allow feature branches to override workflows and use custom ones
     allowed_overrides: [workflow]
     allow_custom_workflows: true
