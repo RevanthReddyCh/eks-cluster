@@ -2,4 +2,15 @@ version: 3
 
 projects:
   - dir: .
-    workflow: custom
+    workspace: destroy
+    workflow: destroy-workflow
+
+workflows:
+  destroy-workflow:
+    plan:
+      steps:
+        - run: terraform init -input=false
+        - run: terraform plan -destroy -input=false -out=destroy.tfplan
+    apply:
+      steps:
+        - run: terraform apply -input=false destroy.tfplan
