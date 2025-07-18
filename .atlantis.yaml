@@ -1,0 +1,21 @@
+version: 3
+
+workflows:
+  destroy:
+    plan:
+      steps:
+        - init
+        - run: terraform plan -destroy -out=tfplan
+    apply:
+      steps:
+        - run: terraform apply tfplan
+
+projects:
+  - name: default
+    dir: .
+    workflow: destroy
+    autoplan:
+      enabled: true
+      when_modified: ["*.tf", "*.tfvars"]
+    allowed_overrides: [workflow]
+    allow_custom_workflows: true
