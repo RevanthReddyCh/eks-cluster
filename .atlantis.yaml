@@ -1,16 +1,21 @@
 version: 3
 
-projects:
-  - dir: .
-    workspace: destroy
-    workflow: destroy-workflow
-
 workflows:
-  destroy-workflow:
+  destroy:
     plan:
       steps:
-        - run: terraform init -input=false
-        - run: terraform plan -destroy -input=false -out=destroy.tfplan
+        - init
+        - run: terraform plan -destroy -out=tfplan
     apply:
       steps:
-        - run: terraform apply -input=false destroy.tfplan
+        - run: terraform apply tfplan
+
+projects:
+  - dir: .
+    workflow: destroy
+    autoplan:
+      when_modified: ["*.tf", "*.tfvars"]
+      enabled: true
+    # Allow PRs from all branches
+    allowed_overrides: [workflow]
+    allow_custom_workflows: true
