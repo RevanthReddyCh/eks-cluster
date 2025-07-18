@@ -17,10 +17,5 @@ projects:
     autoplan:
       enabled: true
       when_modified: ["*.tf", "*.tfvars"]
-    # Optional: use this if you want Atlantis to trigger on specific workspaces
-    # workspace: default
-
-    # These allow feature branches to override workflows and use custom ones
     allowed_overrides: [workflow]
     allow_custom_workflows: true
-# just to check the commit
