@@ -13,7 +13,7 @@ workflows:
 projects:
   - name: default
     dir: .
-    workflow: destroy
+    workflow: default
     autoplan:
       enabled: true
       when_modified: ["*.tf", "*.tfvars"]
